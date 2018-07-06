@@ -1,0 +1,95 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web-GL Map</title>
+    <!-- Fonts remote -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700"
+          rel="stylesheet">
+    <!-- Css Links local -->
+    <link href="css/bootstrap-material-design.min.css" rel="stylesheet" type="text/css">
+    <link href="css/custom.css" rel="stylesheet" type="text/css">
+
+    <!--JS Remote  -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha256-98vAGjEDGN79TjHkYWVD4s87rvWkdWLHPs5MC3FvFX4=" crossorigin="anonymous"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"
+            integrity="sha256-F6h55Qw6sweK+t7SiOJX+2bpSAa3b/fnlrVCJvmEj1A=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"
+            integrity="sha256-0Yg/eibVdKyxkuVo1Qwh0DspoUCHvSbm/oOoYVz32BQ=" crossorigin="anonymous"></script>
+    <!-- Local JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+            crossorigin="anonymous"></script>
+    <!--<script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>-->
+    <script src="js/bootstrap-material-design.min.js"></script>
+
+    <!-- GLM Remote JS -->
+    <script src="https://rawgit.com/mrdoob/stats.js/master/build/stats.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Base64/1.0.1/base64.min.js"
+            integrity="sha256-TIM6MO3yNF4Lvw+A1XLEyy/qiHW4MAjQCjJIqIhHKyY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/zlibjs@0.3.1/bin/gunzip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.4.0/gl-matrix.js"></script>
+    <!--<script src="js/math-gl.umd.js"></script>
+    <script src="js/glm.umd.js"></script>
+    <script src="js/dp.umd.js"></script>
+    <!-- GLM Local JS -->
+
+</head>
+<body>
+<div id="landingDiv" class="landing-div">
+    <!-- LOGO -->
+    <div class="logo-div">
+        <div>
+            <img src="img/GLMLogoFILL.png" class="logo-img">
+            <p class="logo-brand-text">LM</p>
+            <p class="logo-version-test">Closed Alpha</p>
+        </div>
+    </div>
+    <!-- Center column Login Info -->
+    <div class="column-position">
+        <div id="holder" class="column-content-holder">
+            <!-- Forum info -->
+            <form id="mainForm" class="mainForm" action="" style="display: none;" novalidate>
+                <div class="login-title">
+                    <div class="form-group">
+                        <p class="column-content-text">
+                            <strong>Welcome</strong>, Please input the address and port to connect to a server
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group bmd-form-group">
+                    <label for="ip" class="bmd-label-placeholder">Address</label>
+                    <input type="text" class="form-control" id="ip" name="ip">
+                </div>
+                <div class="form-group bmd-form-group">
+                    <label for="port" class="bmd-label-placeholder">Port</label>
+                    <input type="text" class="form-control" id="port" name="port">
+                </div>
+                <div class="form-group bmd-form-group">
+                    <button type="submit" class="btn btn-outline btn-glm" style="width: 100%;">Connect</button>
+                </div>
+            </form>
+            <!-- Display this loading on forum submit -->
+            <div id="loadingDiv" class="column-content-loading-div">
+                <p id="conText" class="column-content-text" style="text-align: center;"></p>
+                <div class="loading"></div>
+                <p id="infoText" class="column-content-text" style="font-size: 10px;text-align: center;">
+                    Downloading Terrain..
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="mapDiv" class="map-div">
+    <canvas id="glCanvas"></canvas>
+</div>
+<script src="js/pageValidation.js"></script>
+<script src="js/page.js"></script>
+</body>
+</html>
+
