@@ -43,8 +43,18 @@ var BasePage = function () {
                     $('#conText').html(defaultConText + ip);
                     $('#loadingDiv').css("display","table-cell").fadeIn('fast', function () {
                         setInfoText("Connecting..");
-                        window.dataManager.init();
-                        window.dataManager.connectToMainServer(ip, port);
+                        $.get("data/texturePackColors.txt", function (data) {
+                            let sep       = data.indexOf('\r\n') === -1 ? '\n' : '\r\n';
+                            let dataLines = data.split(sep);
+                            let colorObj = {};
+                            for (let i = 0; i < dataLines.length; i++) {
+                                let sSplit = dataLines[i].split(' ');
+                                colorObj[sSplit[0]] = sSplit[1];
+                            }
+                            window.BasePlugin.registerPlugin(colorObj);
+                            window.dataManager.init();
+                            window.dataManager.connectToMainServer(ip, parseInt(port, 10));
+                        });
                     });
                 });
             }

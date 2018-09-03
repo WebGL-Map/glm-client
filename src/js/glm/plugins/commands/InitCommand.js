@@ -1,23 +1,22 @@
-import {Command} from "glm-client-base";
-import {GlobalStates} from "glm-client-base";
-import {Event} from "glm-client-base";
-import Util from "../Util";
-import {ServerStates} from "glm-client-base";
-import {Entry} from "glm-client-base";
+import {Command, Entry, Event, GlobalStates, ServerStates} from "glm-client-base";
 
+/**
+ * Handles events for retrieving the initial information from a server.
+ *
+ * @author Tyler Bucher
+ */
 export default class InitCommand extends Command {
 
     /**
-     * @param event
-     * @param {JSON} jsonObject
+     * @param {Event} event the event object to pass.
+     * @param {JSON} jsonObject the json object from the web socket message.
      */
     handle(event, jsonObject) {
+        // Dispatch events
         window.dataManager.eventManager.dispatchEvent(new Event('preInit'));
-        let server                            = window.dataManager.serverMap.get(event.target.url);
+        let server                            = window.dataManager.serverMap.get(event.target['url']);
         server.state                          = ServerStates.INIT;
         server.name                           = jsonObject['data']['serverName'];
-        //change server name
-        let urlData                           = Util.getIpAndPort(event.currentTarget.url);
         //set chunk cache lifetime
         window.dataManager.chunkCacheLifetime = jsonObject['data']['cacheLifetime'];
         // set cpp traits and types
@@ -56,9 +55,16 @@ export default class InitCommand extends Command {
         window.dataManager.serverMap.get(event.target.url).webSocketClient.getNative().send(JSON.stringify({
             cmd: "getWorlds"
         }));
+        // Dispatch events
         window.dataManager.eventManager.dispatchEvent(new Event('postInit'));
     }
 
+    /**
+     * Adds a block type to the block type list if it is not present.
+     *
+     * @param {String} mod the mod id of the block.
+     * @param {String} type the type of the item.
+     */
     static addBlockTypeIfNotPresent(mod, type) {
         for (let /** @type {Entry}*/ entry of window.dataManager.blockTypes) {
             if (entry.first === mod && entry.second === type) {
@@ -68,6 +74,12 @@ export default class InitCommand extends Command {
         window.dataManager.blockTypes.push(new Entry(mod, type));
     }
 
+    /**
+     * Adds a block trait to the block traits list if it is not present.
+     *
+     * @param {String} key the trait name.
+     * @param {String} value the trait value.
+     */
     static addBlockTraitIfNotPresent(key, value) {
         for (let /** @type {Entry}*/ entry of window.dataManager.blockTraits) {
             if (entry.first === key && entry.second === value) {

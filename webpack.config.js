@@ -14,16 +14,25 @@ module.exports = {
     module   : {
         rules: [
             {
-                test   : path.join(__dirname, 'src'),
+                test   : path.join(__dirname, 'src/js'),
                 loader : 'babel-loader',
                 options: {
                     presets: ["env", "stage-1"],
+                }
+            },
+            {
+                test   : path.join(__dirname, 'src/js/glm/plugins/config.js'),
+                loader : 'file-loader',
+                options: {
+                    name: 'base-plugin-config.js',
                 }
             }
         ]
     },
     externals: {
-        "glm-client-base": 'window',
-        "math.gl"        : 'window'
+        "GLM_CONFIG"           : 'window',
+        "glm-client-base"      : 'window',
+        "math.gl"              : 'window',
+        "DEFAULT_PLUGIN_CONFIG": 'window'
     }
 };

@@ -17,11 +17,6 @@ export default class TwoDWorld extends World {
      */
     constructor(id, name, isDefault, spawnPoint) {
         super(id, name, isDefault, spawnPoint);
-
-        this.requestPlayerTime = 0;
-
-        this.requestPlayerCommandInterval = 0;
-
         /**
          * @type {Map<Number, Map<Number, ChunkRequestInfo>>}
          */
@@ -35,8 +30,82 @@ export default class TwoDWorld extends World {
          */
         this.chunkJsonQueue = [];
         /**
-         * @type {Set<any>}
+         * @type {Array<Array<Number>>}
          */
-        this.lightingQueue = new Set();
+        this.ppar = [];
+        /**
+         * @type {Array<Array<Number>>}
+         */
+        this.pnar = [];
+        /**
+         * @type {Array<Array<Number>>}
+         */
+        this.npar = [];
+        /**
+         * @type {Array<Array<Number>>}
+         */
+        this.nnar = [];
+    }
+
+    /**
+     * Sets and computes the array map for a value.
+     *
+     * @param {Number} x the x position.
+     * @param {Number} y the y position.
+     * @param {Number} z the z position.
+     * @param {Number} value the value to set.
+     */
+    setAndCompute(x, y, z, value) {
+        let xAbs = Math.abs(x);
+        let zZbs = Math.abs(z);
+        if (x > -1) {
+            if (z > -1) {
+                if (this.ppar[x] == null) {
+                    this.ppar[x] = [];
+                }
+                this.ppar[x][z] = value;
+            } else {
+                if (this.pnar[x] == null) {
+                    this.pnar[x] = [];
+                }
+                this.pnar[x][zZbs] = value;
+            }
+        } else {
+            if (z > -1) {
+                if (this.npar[xAbs] == null) {
+                    this.npar[xAbs] = [];
+                }
+                this.npar[xAbs][z] = value;
+            } else {
+                if (this.nnar[xAbs] == null) {
+                    this.nnar[xAbs] = [];
+                }
+                this.nnar[xAbs][zZbs] = value;
+            }
+        }
+    }
+
+    /**
+     * @param {Number} x the x position of the block.
+     * @param {Number} y the y position of the block.
+     * @param {Number} z the z position of the block.
+     * @return {Number|undefined} the block type id or undefined.
+     */
+    getBlockType(x, y, z) {
+        let xAbs = Math.abs(x);
+        let zAbs = Math.abs(z);
+        if (x > -1) {
+            if (z > -1) {
+                return this.ppar[x] !== undefined ? this.ppar[x][z] : undefined;
+            } else {
+                return this.pnar[x] !== undefined ? this.pnar[x][zAbs] : undefined;
+            }
+        } else {
+            if (z > -1) {
+                return this.npar[xAbs] !== undefined ? this.npar[xAbs][z] : undefined;
+            } else {
+                return this.nnar[xAbs] !== undefined ? this.nnar[xAbs][zAbs] : undefined;
+            }
+        }
     }
 }

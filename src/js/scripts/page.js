@@ -6,32 +6,37 @@ $(document).ready(function () {
     jqBody.bootstrapMaterialDesign();
 
     window.dataManager = new window.DataManager($("#infoText"), $("#glCanvas"), jqBody);
-    window.BasePlugin.registerPlugin();
 });
 // preform auto loading
 $(document).ready(function () {
-    // Get parameters
-    let url        = window.location.href;
-    let paramKvps  = url.split('?');
-    let paramArray = [];
-    paramKvps      = paramKvps.pop().split('&');
-    // Split params into kvp array
-    for (let i = 0; i < paramKvps.length; i++) {
-        let kvp            = paramKvps[i].split('=');
-        paramArray[kvp[0]] = kvp[1];
+    // Set ip and port to null
+    let ip   = null;
+    let port = null;
+    let auto = false;
+    // check if auto
+    if(window.DEFAULT_PLUGIN_CONFIG.autoLogin) {
+        ip = window.DEFAULT_PLUGIN_CONFIG.autoLoginAddress;
+        port = window.DEFAULT_PLUGIN_CONFIG.autoLoginPort;
+        auto = true;
+    } else {
+        // Get parameters
+        let url        = window.location.href;
+        let paramKvps  = url.split('?');
+        let paramArray = [];
+        paramKvps      = paramKvps.pop().split('&');
+        // Split params into kvp array
+        for (let i = 0; i < paramKvps.length; i++) {
+            let kvp            = paramKvps[i].split('=');
+            paramArray[kvp[0]] = kvp[1];
+        }
+        // Get ip and port
+        ip   = paramArray['ip'];
+        port = paramArray['port'];
+        // get option to auto connect
+        auto = paramArray['auto'];
     }
-    // Get ip and port
-    let ip   = paramArray['ip'];
-    let port = paramArray['port'];
-    // Set fields
-    if (ip != null) {
-        $('#ip').val(ip).closest('.form-group').addClass('is-filled');
-    }
-    if (port != null) {
-        $('#port').val(port).closest('.form-group').addClass('is-filled');
-    }
-    // get option to auto connect
-    let auto = paramArray['auto'];
+    // set text
+    setIpAndPortText(ip, port);
     if (auto !== 'false' && ip != null && port != null) {
         $('#mainForm').submit();
     } else {
@@ -41,4 +46,14 @@ $(document).ready(function () {
 
 function setInfoText(string) {
     $('#infoText').text(string);
+}
+
+function setIpAndPortText(ip, port) {
+    // Set fields
+    if (ip != null) {
+        $('#ip').val(ip).closest('.form-group').addClass('is-filled');
+    }
+    if (port != null) {
+        $('#port').val(port).closest('.form-group').addClass('is-filled');
+    }
 }

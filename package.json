@@ -5,11 +5,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/WebGL-Map/something.git"
+    "url": "https://github.com/WebGL-Map/glm-client.git"
   },
   "dependencies": {
-    "glm-client-base": "0.0.7",
     "base64-js": "^1.2.3",
+    "collections": "^5.1.5",
+    "glm-client-base": "0.0.10",
     "math.gl": "^1.0.4",
     "zlibjs": "^0.3.1"
   },
@@ -20,6 +21,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-1": "^6.24.1",
     "babel-register": "^6.26.0",
+    "file-loader": "^2.0.0",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.10"
   },

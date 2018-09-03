@@ -1,22 +1,27 @@
 import {WorldBorder} from 'glm-client-base';
 
+/**
+ * Renders a world border for this world.
+ *
+ * @author Tyler Bucher
+ */
 export default class TwoDWorldBorder extends WorldBorder {
 
     /**
      * @param {Vector3} center the center position of the border.
      * @param {number} diameter how long and wide the border is.
-     * @param {WebGLRenderingContext} glContext
+     * @param {WebGLRenderingContext} glContext the OpenGL rendering context.
      */
     constructor(center, diameter, glContext) {//todo set line width
         super(center, diameter);
-        let r = diameter / 2;
-        this.vertexData = new Float32Array([
+        let r              = diameter / 2;
+        this.vertexData    = new Float32Array([
             center.x - r, center.z - r,
             center.x + r, center.z - r,
             center.x + r, center.z + r,
             center.x - r, center.z + r,
         ]);
-        this.colorData  = new Float32Array([
+        this.colorData     = new Float32Array([
             1, 0, 0, 0.75,
             1, 0, 0, 0.75,
             1, 0, 0, 0.75,
@@ -31,7 +36,7 @@ export default class TwoDWorldBorder extends WorldBorder {
     }
 
     /**
-     * @param {WebGLRenderingContext} glContext
+     * @param {WebGLRenderingContext} glContext the OpenGL rendering context.
      */
     render(glContext) {
         glContext.bindBuffer(glContext.ARRAY_BUFFER, this.vertexHandler);

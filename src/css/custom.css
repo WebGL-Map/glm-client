@@ -172,3 +172,22 @@ body {
     top: 0;
     left: 0;
 }
+
+.outer {
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    margin-top: -11.25rem;
+}
+
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.inner {
+    margin-left: auto;
+    margin-right: auto;
+    width: 25rem;
+}

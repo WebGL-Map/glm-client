@@ -2,11 +2,17 @@ import {Event} from "glm-client-base";
 
 export let _menuButtonExitPending;
 
+/**
+ * Handles functions relating to the postInitGl event.
+ *
+ * @author Tyler Bucher
+ */
 export class OnPostInitGlListener {
 
     /**
+     * The callback function for the postInitGl event.
      *
-     * @param {Event} event
+     * @param {Event} event the event fired.
      */
     static handle(event) {
         let mapDiv     = $('#mapDiv');
@@ -67,20 +73,20 @@ export class OnPostInitGlListener {
         mapDiv.append(menuModal);
         $('#menuModal').on('show.bs.modal', function (e) {
             let jQServerSelect = $('#serverSelect');
-            let jQWorldSelect = $('#worldSelect');
+            let jQWorldSelect  = $('#worldSelect');
             jQServerSelect.empty();
             jQWorldSelect.empty();
             window.dataManager.serverMap.forEach(function (v, k, map) {
                 let sel = '';
                 // server
-                if(window.dataManager.selectedServer === v) {
+                if (window.dataManager.selectedServer === v) {
                     sel = 'selected';
                 }
                 jQServerSelect.append('<option value="' + k + '" ' + sel + ' style="color: black;">' + v.name + '</option>');
             });
             window.dataManager.selectedServer.worldMap.forEach(function (v, k, map) {
                 let sel = '';
-                if(window.dataManager.selectedWorld === v) {
+                if (window.dataManager.selectedWorld === v) {
                     sel = 'selected';
                 }
                 jQWorldSelect.append('<option value="' + k + '" ' + sel + ' style="color: black;">' + v.name + '</option>');
@@ -91,7 +97,7 @@ export class OnPostInitGlListener {
             jQWorldSelect.empty();
             window.dataManager.selectedServer.worldMap.forEach(function (v, k, map) {
                 let sel = '';
-                if(window.dataManager.selectedWorld === v) {
+                if (window.dataManager.selectedWorld === v) {
                     sel = 'selected';
                 }
                 jQWorldSelect.append('<option value="' + k + '" ' + sel + ' style="color: black;">' + v.name + '</option>');

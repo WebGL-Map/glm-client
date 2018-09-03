@@ -1,10 +1,9 @@
-import Util from './glm/plugins/Util';
 import BasePlugin from './glm/plugins/BasePlugin';
 
 import DefaultTexturePack from './glm/plugins/texturepack/default/DefaultTexturePack';
 import Colors from './glm/plugins/texturepack/default/Colors';
 import TwoDWorld from './glm/plugins/texturepack/default/data/TwoDWorld';
-import TwoDChunk from './glm/plugins/texturepack/default/data/TwoDChunk';
+import TwoDBlock from './glm/plugins/texturepack/default/data/TwoDBlock';
 
 import OnPostPlayerRender from './glm/plugins/events/OnPostPlayerRender';
 import {
@@ -19,13 +18,12 @@ import GetServersCommand from './glm/plugins/commands/GetServersCommand';
 import GetChunkForPositionCommand from './glm/plugins/commands/GetChunkForPositionCommand';
 
 export {
-    Util,
     BasePlugin,
 
     DefaultTexturePack,
     Colors,
     TwoDWorld,
-    TwoDChunk,
+    TwoDBlock,
 
     OnPostPlayerRender,
     OnPostInitGlListener,
@@ -37,3 +35,5 @@ export {
     GetServersCommand,
     GetChunkForPositionCommand
 }
+
+import './glm/plugins/config.js'

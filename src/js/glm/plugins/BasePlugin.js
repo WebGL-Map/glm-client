@@ -7,29 +7,47 @@ import GetServersCommand from "./commands/GetServersCommand";
 import DefaultTexturePack from "./texturepack/default/DefaultTexturePack";
 import WorldBorderUpdateCommand from "./commands/WorldBorderUpdateCommand";
 import OnPostPlayerRender from "./events/OnPostPlayerRender";
-import GetPlayersCommand from "./commands/GetPlayersCommand";
 
+/**
+ * The base plugin class.
+ *
+ * @author Tyler Bucher.
+ */
 export default class BasePlugin extends Plugin {
 
-    static registerPlugin() {
-        window.dataManager.pluginManager.registerPlugin(new BasePlugin());
+    /**
+     * Registers vars and callbacks for this plugin.
+     */
+    static registerPlugin(colorObj) {
+        let plugin = new BasePlugin();
+        plugin.colorObj = colorObj;
+        window.dataManager.pluginManager.registerPlugin(plugin);
+        // Pass uuid to base glm
+        window.GLM_CONFIG.uuid = window.DEFAULT_PLUGIN_CONFIG.uuid;
     }
 
+    /**
+     * Creates this plugin.
+     */
     constructor() {
         super();
+        this.colorObj = null;
     }
 
+    /**
+     * Initializes this plugin with the glm core lib.
+     */
     initialize() {
+        // Register events
         window.dataManager.eventManager.registerListener('postInitGl', OnPostInitGlListener.handle);
         window.dataManager.eventManager.registerListener('postPlayersRender', OnPostPlayerRender.handle);
-
+        // Register command listeners
         window.dataManager.commandRegistrar.registerCommand('init', new InitCommand());
         window.dataManager.commandRegistrar.registerCommand('getServers', new GetServersCommand());
         window.dataManager.commandRegistrar.registerCommand('getWorlds', new GetWorldsCommand());
         window.dataManager.commandRegistrar.registerCommand('getChunkForPosition', new GetChunkForPositionCommand());
         window.dataManager.commandRegistrar.registerCommand('worldBorderUpdate', new WorldBorderUpdateCommand());
-        window.dataManager.commandRegistrar.registerCommand('getPlayers', new GetPlayersCommand());
-
-        window.dataManager.texturePack = new DefaultTexturePack(window.dataManager.canvasElement[0]);
+        // Register texture pack for rendering
+        window.dataManager.texturePack = new DefaultTexturePack(window.dataManager.canvasElement[0], this.colorObj);
     }
 }
